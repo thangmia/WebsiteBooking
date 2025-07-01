@@ -64,7 +64,7 @@ require 'includes/sidebar.php';
     }
     ?>
 
-    <form action="service_edit.php?id=<?php echo $id; ?>" method="POST">
+    <form action="edit.php?id=<?php echo $id; ?>" method="POST">
         <div class="form-group">
             <label for="name">Tên Dịch vụ (*)</label>
             <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($service['name']); ?>" required>

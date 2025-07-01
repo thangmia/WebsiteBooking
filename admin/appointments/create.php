@@ -44,7 +44,7 @@ require 'includes/sidebar.php';
 
     <?php if (isset($error)) { echo '<div class="alert alert-danger">' . $error . '</div>'; } ?>
 
-    <form action="appointment_create.php" method="POST">
+    <form action="create.php" method="POST">
         <div class="form-group">
             <label for="patient_id">Bệnh nhân (*)</label>
             <select class="form-control" id="patient_id" name="patient_id" required>

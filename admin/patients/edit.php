@@ -58,7 +58,7 @@ require 'includes/sidebar.php';
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
     <h1 class="h2 pt-3 pb-2 mb-3 border-bottom">Chỉnh sửa thông tin Bệnh nhân</h1>
 
-    <form action="patient_edit.php?id=<?php echo $id; ?>" method="POST">
+    <form action="edit.php?id=<?php echo $id; ?>" method="POST">
         <div class="form-group">
             <label for="name">Họ và Tên (*)</label>
             <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($patient['name']); ?>" required>

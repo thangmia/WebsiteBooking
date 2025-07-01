@@ -47,7 +47,7 @@ require 'includes/sidebar.php';
 
     <?php if (isset($error)) { echo '<div class="alert alert-danger">' . $error . '</div>'; } ?>
 
-    <form action="patient_create.php" method="POST">
+    <form action="create.php" method="POST">
         <div class="form-group">
             <label for="name">Họ và Tên (*)</label>
             <input type="text" class="form-control" id="name" name="name" required>
