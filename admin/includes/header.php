@@ -31,7 +31,7 @@ $user_name = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_na
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="/ten_thu_muc_du_an_cua_ban/admin/">Admin Panel</a>
+    <a class="navbar-brand" href="index.php">Admin Panel</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -40,7 +40,7 @@ $user_name = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_na
                 </span>
             </li>
             <li class="nav-item">
-                <a class="btn btn-danger" href="/ten_thu_muc_du_an_cua_ban/admin/logout.php">Đăng xuất</a>
+                <a class="btn btn-danger" href="logout.php">Đăng xuất</a>
             </li>
         </ul>
     </div>

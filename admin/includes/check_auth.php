@@ -1,19 +1,33 @@
 <?php
-// Luôn bắt đầu session ở đầu file
-session_start();
+// File: WebsiteBooking/admin/includes/check_auth.php
 
-// Kiểm tra xem session của người dùng có tồn tại không
-// và vai trò của họ có phải là 'admin' hoặc 'doctor' không.
-if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] !== 'admin' && $_SESSION['user_role'] !== 'doctor')) {
-    // Nếu không, đá họ về trang đăng nhập
-    // Cần cung cấp đường dẫn đầy đủ từ gốc của web server nếu có thể
-    // Ví dụ: /ten_project/admin/login.php
-    header('Location: login.php');
-    exit(); // Dừng chạy code ngay lập tức
+// Bắt đầu session nếu nó chưa được bắt đầu
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// Bổ sung: Phân quyền chi tiết hơn (ví dụ)
-// Bạn có thể mở rộng file này để kiểm tra vai trò cụ thể cho từng trang
+// Kiểm tra xem người dùng đã đăng nhập chưa
+if (!isset($_SESSION['user_id'])) {
+    // Nếu chưa, chuyển hướng về trang đăng nhập
+    header("Location: login.php");
+    exit();
+}
+
+// Kiểm tra vai trò của người dùng
+// Chỉ 'admin' và 'doctor' mới được phép ở lại trang quản trị
+if ($_SESSION['user_role'] !== 'admin' && $_SESSION['user_role'] !== 'doctor') {
+    // Nếu vai trò không hợp lệ, hủy session và chuyển về trang đăng nhập
+    session_destroy();
+    header("Location: login.php?error=access_denied");
+    exit();
+}
+
+/**
+ * Hàm tiện ích để kiểm tra xem người dùng hiện tại có phải là admin không.
+ * Rất hữu ích cho các chức năng chỉ dành cho admin (ví dụ: xóa dữ liệu).
+ *
+ * @return boolean True nếu là admin, False nếu không phải.
+ */
 function is_admin() {
     return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 }

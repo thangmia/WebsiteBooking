@@ -1,22 +1,15 @@
 <?php
-session_start(); // Bắt đầu session
+// File: WebsiteBooking/admin/logout.php
+
+session_start();
 
 // Hủy tất cả các biến session
 $_SESSION = array();
 
-// Nếu muốn hủy session hoàn toàn, hãy xóa cả cookie session.
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
-    );
-}
-
-// Cuối cùng, hủy session
+// Hủy session
 session_destroy();
 
-// Chuyển hướng về trang đăng nhập
-header("Location: login.php");
-exit();
+// Chuyển hướng người dùng về trang đăng nhập
+header("location: login.php");
+exit;
 ?>

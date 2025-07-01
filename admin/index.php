@@ -1,10 +1,6 @@
 <?php
-// BƯỚC 1: GỌI "NGƯỜI GÁC CỔNG"
-// File này phải được gọi đầu tiên để kiểm tra quyền truy cập
-require 'includes/check_auth.php';
 
-// BƯỚC 2: GỌI HEADER
-// Header chứa phần đầu HTML, CSS và thanh Navbar
+require 'includes/check_auth.php';
 require 'includes/header.php';
 ?>
 

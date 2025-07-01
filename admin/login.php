@@ -1,83 +1,132 @@
 <?php
-// Bắt đầu session để có thể lưu thông tin đăng nhập
+// File: WebsiteBooking/admin/login.php
+
+// Luôn bắt đầu session ở đầu file
 session_start();
 
-// Nếu đã đăng nhập, chuyển thẳng vào dashboard
-if (isset($_SESSION['user_id']) && ($_SESSION['user_role'] === 'admin' || $_SESSION['user_role'] === 'doctor')) {
-    header('Location: index.php');
+// Nếu người dùng đã đăng nhập, chuyển hướng họ đến trang dashboard
+if (isset($_SESSION['user_id'])) {
+    header("Location: index.php");
     exit();
 }
 
-// Kiểm tra xem form đã được gửi đi chưa
+// Biến để lưu thông báo lỗi
+$error_message = '';
+
+// Chỉ xử lý khi người dùng nhấn nút submit (phương thức POST)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Nhúng file kết nối CSDL
-    // Lưu ý đường dẫn: file login.php nằm trong /admin, nên cần đi ra 1 cấp (../)
     require '../includes/db.php';
 
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Chuẩn bị câu lệnh SQL để tránh SQL Injection
-    $sql = "SELECT id, name, password, role FROM users WHERE email = ? AND (role = 'admin' OR role = 'doctor')";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Kiểm tra xem email và password có được nhập không
+    if (empty($email) || empty($password)) {
+        $error_message = "Vui lòng nhập đầy đủ email và mật khẩu.";
+    } else {
+        // Sử dụng prepared statement để chống SQL Injection
+        $sql = "SELECT id, name, password, role FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
 
-        // So sánh mật khẩu đã hash
-        if (password_verify($password, $user['password'])) {
-            // Mật khẩu chính xác, lưu thông tin vào Session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_role'] = $user['role'];
+            // Xác thực mật khẩu
+            if (password_verify($password, $user['password'])) {
+                // Kiểm tra vai trò (chỉ admin hoặc doctor được vào trang quản trị)
+                if ($user['role'] == 'admin' || $user['role'] == 'doctor') {
+                    // Đăng nhập thành công, lưu thông tin vào session
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_name'] = $user['name'];
+                    $_SESSION['user_role'] = $user['role'];
 
-            // Chuyển hướng tới trang dashboard
-            header('Location: index.php');
-            exit();
+                    // Chuyển hướng đến trang dashboard
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    // Vai trò không hợp lệ
+                    $error_message = "Tài khoản của bạn không có quyền truy cập trang này.";
+                }
+            } else {
+                // Sai mật khẩu
+                $error_message = "Email hoặc mật khẩu không chính xác.";
+            }
+        } else {
+            // Không tìm thấy user với email này
+            $error_message = "Email hoặc mật khẩu không chính xác.";
         }
+        $stmt->close();
+        $conn->close();
     }
-
-    // Nếu email không tồn tại hoặc mật khẩu sai, chuyển hướng về lại trang login với thông báo lỗi
-    header('Location: login.php?error=1');
-    exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="vi">
-    
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập trang Quản trị</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <h1 class="text-center mt-5">Admin Đăng Nhập</h1>
-                <?php
-                    // Hiển thị thông báo lỗi nếu có
-                    if (isset($_GET['error'])) {
-                        echo '<p class="alert alert-danger">Email hoặc mật khẩu không đúng!</p>';
-                    }
-                ?>
-                <form action="login.php" method="POST" class="mt-4">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Mật khẩu</label>
-                        <input type="password" name="password" id="password" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
-                </form>
+<body class="text-center">
+    <form class="form-signin" method="POST" action="login.php">
+        <h1 class="h3 mb-3 font-weight-normal">Đăng nhập Admin</h1>
+
+        <?php if (!empty($error_message)): ?>
+            <div class="alert alert-danger">
+                <?php echo $error_message; ?>
             </div>
-        </div>
-    </div>
+        <?php endif; ?>
+
+        <label for="inputEmail" class="sr-only">Địa chỉ email</label>
+        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Địa chỉ email" required autofocus>
+        
+        <label for="inputPassword" class="sr-only">Mật khẩu</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Mật khẩu" required>
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Đăng nhập</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2025 - Phòng khám Nha Khoa</p>
+    </form>
 </body>
 </html>
