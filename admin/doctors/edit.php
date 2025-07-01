@@ -82,7 +82,7 @@ require 'includes/sidebar.php';
     
     <?php if (isset($error)) { echo '<div class="alert alert-danger">' . $error . '</div>'; } ?>
 
-    <form action="doctor_edit.php?id=<?php echo $doctor_id; ?>" method="POST">
+    <form action="edit.php?id=<?php echo $doctor_id; ?>" method="POST">
         <input type="hidden" name="user_id" value="<?php echo $doctor['user_id']; ?>">
 
         <h5>Thông tin tài khoản</h5>

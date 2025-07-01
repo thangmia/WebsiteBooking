@@ -47,7 +47,7 @@ require 'includes/sidebar.php';
     }
     ?>
 
-    <form action="service_create.php" method="POST">
+    <form action="create.php" method="POST">
         <div class="form-group">
             <label for="name">Tên Dịch vụ (*)</label>
             <input type="text" class="form-control" id="name" name="name" required>

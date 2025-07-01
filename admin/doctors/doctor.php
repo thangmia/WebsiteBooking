@@ -79,7 +79,7 @@ require 'includes/sidebar.php';
 
     <?php if (isset($error)) { echo '<div class="alert alert-danger">' . $error . '</div>'; } ?>
 
-    <form action="doctor_create.php" method="POST">
+    <form action="doctor.php" method="POST">
         <h5>Thông tin tài khoản</h5>
         <div class="form-group">
             <label for="name">Họ và Tên (*)</label>

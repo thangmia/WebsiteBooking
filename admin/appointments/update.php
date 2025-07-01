@@ -53,7 +53,7 @@ require 'includes/sidebar.php';
     <h1 class="h2 pt-3 pb-2 mb-3 border-bottom">Chỉnh sửa Lịch hẹn #<?php echo $id; ?></h1>
     <?php if (isset($error)) { echo '<div class="alert alert-danger">' . $error . '</div>'; } ?>
 
-    <form action="appointment_edit.php?id=<?php echo $id; ?>" method="POST">
+    <form action="update.php?id=<?php echo $id; ?>" method="POST">
         <div class="form-group">
             <label for="patient_id">Bệnh nhân (*)</label>
             <select class="form-control" id="patient_id" name="patient_id" required>

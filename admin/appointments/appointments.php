@@ -15,7 +15,7 @@ $sql = "SELECT
         FROM appointments a
         LEFT JOIN users p ON a.patient_id = p.id
         LEFT JOIN doctors d ON a.doctor_id = d.id
-        LEFT JOIN users d_user ON d.user_id = u_doc.id
+        LEFT JOIN users AS d_user ON d.user_id = u_doc.id
         LEFT JOIN services s ON a.service_id = s.id
         ORDER BY a.appointment_time DESC";
 
@@ -80,8 +80,8 @@ function getStatusBadge($status) {
                         <td><?php echo date('d/m/Y H:i', strtotime($row['appointment_time'])); ?></td>
                         <td><?php echo getStatusBadge($row['status']); ?></td>
                         <td>
-                            <a href="appointment_edit.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">Sửa</a>
-                            <a href="appointment_delete.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa lịch hẹn này không?');">Xóa</a>
+                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">Sửa</a>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa lịch hẹn này không?');">Xóa</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
