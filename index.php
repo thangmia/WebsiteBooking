@@ -16,12 +16,19 @@ $services_result = $conn->query("SELECT name, description, price FROM services L
     <div class="container">
         <h1 class="display-4">Chào mừng đến với Nha Khoa Hạnh Phúc</h1>
         <p class="lead">Nơi mang lại nụ cười rạng rỡ và sức khỏe răng miệng toàn diện cho bạn.</p>
-        <a class="btn btn-light btn-lg" href="#" role="button">Đặt lịch hẹn ngay</a>
+        <a class="btn btn-light btn-lg" href="booking.php" role="button">Đặt lịch hẹn ngay</a>
     </div>
 </div>
 
 <div class="container">
-
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="alert alert-success" role="alert">
+            <?php 
+                echo $_SESSION['success_message']; 
+                unset($_SESSION['success_message']); // Xóa thông báo sau khi hiển thị
+            ?>
+        </div>
+    <?php endif; ?>
     <section id="services" class="my-5">
         <h2 class="text-center mb-4">Dịch vụ của chúng tôi</h2>
         <div class="row">

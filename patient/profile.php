@@ -1,43 +1,49 @@
 <?php
-// File: WebsiteBooking/profile.php
+// File: WebsiteBooking/patient/profile.php
 
-// Dòng này phải được gọi đầu tiên để bảo vệ trang
+// Dòng này phải được gọi đầu tiên để bảo vệ trang và bắt đầu session
 require '../includes/check_patient_auth.php';
-?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang cá nhân - Phòng khám Nha Khoa</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Nha Khoa XYZ</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <span class="navbar-text">
-                        Xin chào, <?php echo htmlspecialchars($_SESSION['user_name']); ?>
-                    </span>
-                </li>
-                <li class="nav-item ml-3">
-                    <a class="btn btn-danger" href="logout.php">Đăng xuất</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
-    <div class="container mt-4">
-        <h1>Trang cá nhân của bạn</h1>
-        <p>Chào mừng bạn đã quay trở lại.</p>
-        
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Đặt lịch hẹn mới</a>
-            <a href="#" class="list-group-item list-group-item-action">Xem lịch sử cuộc hẹn</a>
-            <a href="#" class="list-group-item list-group-item-action">Cập nhật thông tin</a>
+// Nhúng header chung của trang public
+// Lưu ý: đường dẫn là '../includes/' vì file profile.php nằm trong thư mục /patient
+require '../includes/header_public.php';
+?>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Trang cá nhân</h1>
+            <p class="lead">Chào mừng bạn quay trở lại, <?php echo htmlspecialchars($_SESSION['user_name']); ?>.</p>
+            <hr>
         </div>
     </div>
-</body>
-</html>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Chức năng</h4>
+            <div class="list-group">
+                <a href="../booking.php" class="list-group-item list-group-item-action">
+                    Đặt lịch hẹn mới
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    Xem lịch sử cuộc hẹn (sẽ phát triển sau)
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    Cập nhật thông tin cá nhân (sẽ phát triển sau)
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thông tin liên hệ</h5>
+                    <p class="card-text">Nếu cần hỗ trợ, vui lòng gọi hotline: <strong>1900.xxxx</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+// Nhúng footer chung
+require '../includes/footer_public.php'; 
+?>

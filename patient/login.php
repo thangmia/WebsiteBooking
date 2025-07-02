@@ -7,7 +7,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'patient') {
 }
 $error_message = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require '/includes/db.php';
+    require '../includes/db.php';
     $email = $_POST['email'];
     $password = $_POST['password'];
     if (empty($email) || empty($password)) {
@@ -73,6 +73,7 @@ require '../includes/header_public.php';
         </div>
     </div>
 </div>
+
 <?php 
 // Nhúng footer
 require '../includes/footer_public.php'; 
