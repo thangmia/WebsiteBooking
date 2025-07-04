@@ -129,3 +129,107 @@
 .btn-primary:hover {
     background-color: #0056b3;
 }
+/* ----- Footer Styling ----- */
+.site-footer {
+    background-color: #1a253c; /* Màu xanh đen */
+    color: #a9b3c9; /* Màu chữ xám nhạt */
+    padding: 60px 0;
+    font-size: 0.9rem;
+}
+
+.footer-heading {
+    color: #ffffff; /* Màu chữ trắng cho tiêu đề */
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.footer-text {
+    line-height: 1.8;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #a9b3c9;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+    padding-left: 5px;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.footer-contact i {
+    color: #ffffff;
+    width: 20px;
+    margin-right: 10px;
+    margin-top: 4px;
+}
+
+.social-icons .social-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #2e3b55;
+    color: #ffffff;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.social-icons .social-icon:hover {
+    background-color: #0056b3; /* Màu xanh primary */
+}
+
+.footer-bottom {
+    background-color: #141d2f; /* Màu nền đậm hơn cho phần bottom */
+    padding: 15px 0;
+    margin-top: 40px;
+}
+
+.footer-bottom p {
+    font-size: 0.8rem;
+    color: #6c757d; /* Màu chữ xám tối */
+}
+/* ============================================ */
+/* ===== STICKY FOOTER SOLUTION ===== */
+/* ============================================ */
+
+/* 1. Đảm bảo thẻ html và body có chiều cao tối thiểu */
+html {
+    height: 100%;
+}
+
+body {
+    /* Thiết lập body thành một flex container theo chiều dọc */
+    display: flex;
+    flex-direction: column;
+    /* Chiều cao tối thiểu của body là 100% chiều cao của màn hình */
+    min-height: 100vh;
+}
+
+/* 2. "Đẩy" footer xuống cuối trang */
+/* Đây là footer cho các trang public như trang chủ, đặt lịch... */
+.site-footer {
+    /* Tự động căn lề trên, đẩy footer xuống dưới cùng */
+    margin-top: auto;
+}
+
+/* Thêm class 'page-wrapper' cho nội dung chính của trang admin 
+   để nó chiếm không gian còn lại.
+*/
+.page-wrapper {
+    flex-grow: 1;
+}

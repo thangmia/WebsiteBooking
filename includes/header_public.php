@@ -2,7 +2,6 @@
 if (!defined('BASE_URL')) {
 define('BASE_URL', '/WebsiteBooking/');
 }
-// Bắt đầu session để có thể kiểm tra trạng thái đăng nhập
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

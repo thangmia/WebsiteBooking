@@ -1,10 +1,8 @@
 <?php
-// File: WebsiteBooking/admin/appointment_create.php
 
 require '../includes/check_auth.php';
 require '../../includes/db.php';
 
-// Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $patient_id = $_POST['patient_id'];
     $doctor_id = $_POST['doctor_id'];
@@ -30,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Lấy danh sách để điền vào các dropdown
 $patients_result = $conn->query("SELECT id, name FROM users WHERE role = 'patient' ORDER BY name");
 $doctors_result = $conn->query("SELECT d.id, u.name FROM doctors d JOIN users u ON d.user_id = u.id ORDER BY u.name");
 $services_result = $conn->query("SELECT id, name FROM services ORDER BY name");

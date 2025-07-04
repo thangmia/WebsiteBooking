@@ -1,5 +1,4 @@
 <?php
-// File: WebsiteBooking/admin/service_edit.php
 
 require '../includes/check_auth.php';
 require '../../includes/db.php';
@@ -9,14 +8,12 @@ if (!is_numeric($id)) {
     die("ID không hợp lệ.");
 }
 
-// Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $duration_minutes = $_POST['duration_minutes'];
     $price = $_POST['price'];
 
-    // Validate
     if (!empty($name) && is_numeric($duration_minutes) && is_numeric($price)) {
         $sql = "UPDATE services SET name = ?, description = ?, duration_minutes = ?, price = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
@@ -34,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Lấy thông tin dịch vụ hiện tại để điền vào form
 $sql_select = "SELECT name, description, duration_minutes, price FROM services WHERE id = ?";
 $stmt_select = $conn->prepare($sql_select);
 $stmt_select->bind_param("i", $id);

@@ -1,12 +1,8 @@
 <?php 
-// File: WebsiteBooking/index.php
 
-// Nhúng header
 require 'includes/header_public.php';
-// Nhúng file kết nối db để lấy dữ liệu động
 require 'includes/db.php';
 
-// Lấy danh sách dịch vụ để hiển thị
 $services_result = $conn->query("SELECT name, description, price FROM services LIMIT 6");
 ?>
 
@@ -26,7 +22,7 @@ $services_result = $conn->query("SELECT name, description, price FROM services L
         <div class="alert alert-success" role="alert">
             <?php 
                 echo $_SESSION['success_message']; 
-                unset($_SESSION['success_message']); // Xóa thông báo sau khi hiển thị
+                unset($_SESSION['success_message']);
             ?>
         </div>
     <?php endif; ?>
@@ -63,7 +59,6 @@ $services_result = $conn->query("SELECT name, description, price FROM services L
             </div>
 
             <?php
-            // Lấy thông tin 4 bác sĩ để hiển thị ra trang chủ
             $sql_doctors = "SELECT u.name, d.specialty, d.avatar 
                             FROM doctors d 
                             JOIN users u ON d.user_id = u.id 
@@ -98,7 +93,6 @@ $services_result = $conn->query("SELECT name, description, price FROM services L
 </div>
 
 <?php 
-// Đóng kết nối và nhúng footer
 $conn->close();
 require 'includes/footer_public.php'; 
 ?>

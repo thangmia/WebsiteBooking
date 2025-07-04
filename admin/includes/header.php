@@ -17,11 +17,11 @@ $user_name = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_na
             position: fixed;
             top: 0;
             left: 0;
-            padding-top: 56px; /* Chiều cao của navbar */
+            padding-top: 56px; 
             background-color: #f8f9fa;
         }
         .main-content {
-            margin-left: 220px; /* Chiều rộng của sidebar */
+            margin-left: 220px; 
             padding-top: 70px;
         }
         .navbar {

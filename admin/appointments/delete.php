@@ -1,5 +1,4 @@
 <?php
-// File: WebsiteBooking/admin/appointment_delete.php
 
 require '../includes/check_auth.php';
 require '../../includes/db.php';
@@ -9,7 +8,6 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 $id = $_GET['id'];
 
-// Chỉ admin mới được xóa
 if (!is_admin()) {
     die("Bạn không có quyền thực hiện hành động này.");
 }

@@ -1,31 +1,23 @@
 <?php
-// File: WebsiteBooking/admin/login.php
 
-// Luôn bắt đầu session ở đầu file
 session_start();
 
-// Nếu người dùng đã đăng nhập, chuyển hướng họ đến trang dashboard
 if (isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 
-// Biến để lưu thông báo lỗi
 $error_message = '';
 
-// Chỉ xử lý khi người dùng nhấn nút submit (phương thức POST)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Nhúng file kết nối CSDL
     require '../includes/db.php';
 
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Kiểm tra xem email và password có được nhập không
     if (empty($email) || empty($password)) {
         $error_message = "Vui lòng nhập đầy đủ email và mật khẩu.";
     } else {
-        // Sử dụng prepared statement để chống SQL Injection
         $sql = "SELECT id, name, password, role FROM users WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $email);
@@ -35,37 +27,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
 
-            // Xác thực mật khẩu
             if (password_verify($password, $user['password'])) {
-                // Kiểm tra vai trò (chỉ admin hoặc doctor được vào trang quản trị)
                 if ($user['role'] == 'admin' || $user['role'] == 'doctor') {
-                    // Đăng nhập thành công, lưu thông tin vào session
                      $_SESSION['user_id'] = $user['id'];
                      $_SESSION['user_name'] = $user['name'];
                      $_SESSION['user_role'] = $user['role'];
 
-            // ===== LOGIC CHUYỂN HƯỚNG THEO VAI TRÒ =====
              if ($user['role'] == 'admin') {
-                // Nếu là admin, chuyển đến trang dashboard chính
                 header("Location: index.php");
             } elseif ($user['role'] == 'doctor') {
-                // Nếu là bác sĩ, chuyển đến trang dashboard của bác sĩ
                 header("Location: doctor_dashboard.php");
             } else {
-                // Mặc định, nếu có vai trò khác, về trang chính
                 header("Location: index.php");
             }
             exit();
                 } else {
-                    // Vai trò không hợp lệ
                     $error_message = "Tài khoản của bạn không có quyền truy cập trang này.";
                 }
             } else {
-                // Sai mật khẩu
                 $error_message = "Email hoặc mật khẩu không chính xác.";
             }
         } else {
-            // Không tìm thấy user với email này
             $error_message = "Email hoặc mật khẩu không chính xác.";
         }
         $stmt->close();

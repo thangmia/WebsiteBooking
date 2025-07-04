@@ -1,5 +1,4 @@
 <?php
-// File: WebsiteBooking/register.php
 session_start();
 $error = '';
 $success = '';
@@ -19,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($password !== $confirm_password) {
         $error = "Mật khẩu xác nhận không khớp.";
     } else {
-        // Kiểm tra email đã tồn tại chưa
         $sql_check = "SELECT id FROM users WHERE email = ?";
         $stmt_check = $conn->prepare($sql_check);
         $stmt_check->bind_param("s", $email);
@@ -29,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result_check->num_rows > 0) {
             $error = "Email đã được sử dụng. Vui lòng chọn email khác.";
         } else {
-            // Thêm người dùng mới
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO users (name, email, phone, password, role) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
@@ -37,8 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             if ($stmt->execute()) {
                 $success = "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.";
-                // Có thể chuyển hướng đến trang đăng nhập
-                // header("Location: login.php?success=1");
             } else {
                 $error = "Đã xảy ra lỗi. Vui lòng thử lại.";
             }

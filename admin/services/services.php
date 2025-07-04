@@ -1,18 +1,12 @@
 <?php
-// File: WebsiteBooking/admin/services.php
 
-// Luôn gọi check_auth đầu tiên
 require '../includes/check_auth.php';
-// Nhúng file kết nối CSDL, lưu ý đường dẫn
 require '../../includes/db.php';
 
-// Lấy tất cả dịch vụ từ CSDL
 $sql = "SELECT id, name, description, duration_minutes, price FROM services ORDER BY id DESC";
 $result = $conn->query($sql);
 
-// Gọi header
 require '../includes/header.php';
-// Gọi sidebar
 require '../includes/sidebar.php';
 ?>
 
@@ -27,7 +21,6 @@ require '../includes/sidebar.php';
     </div>
 
     <?php
-        // Hiển thị thông báo (nếu có) từ các trang xử lý
         if (isset($_GET['success'])) {
             echo '<div class="alert alert-success">' . htmlspecialchars($_GET['success']) . '</div>';
         }
@@ -69,7 +62,6 @@ require '../includes/sidebar.php';
 </main>
 
 <?php
-// Đóng kết nối và gọi footer
 $conn->close();
 require '../includes/footer.php';
 ?>

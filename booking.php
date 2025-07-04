@@ -1,14 +1,11 @@
 <?php
-// File: WebsiteBooking/booking.php
 
 require 'includes/header_public.php';
 require 'includes/db.php';
-require 'includes/check_patient_auth.php'; // Đảm bảo chỉ bệnh nhân đã đăng nhập mới vào được
+require 'includes/check_patient_auth.php'; 
 
-// Lấy danh sách dịch vụ
+
 $services_result = $conn->query("SELECT id, name FROM services ORDER BY name");
-
-// Lấy danh sách bác sĩ
 $doctors_result = $conn->query("SELECT d.id, u.name FROM doctors d JOIN users u ON d.user_id = u.id WHERE u.role = 'doctor' ORDER BY u.name");
 
 ?>

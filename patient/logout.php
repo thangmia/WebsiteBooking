@@ -1,5 +1,4 @@
 <?php
-// File: WebsiteBooking/logout.php
 session_start();
 $_SESSION = array();
 session_destroy();

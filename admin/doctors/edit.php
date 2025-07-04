@@ -1,6 +1,4 @@
 <?php
-// File: WebsiteBooking/admin/doctor_edit.php
-
 require 'includes/check_auth.php';
 require '../includes/db.php';
 
@@ -9,28 +7,23 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 $doctor_id = $_GET['id'];
 
-// Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Dữ liệu từ form
     $user_id = $_POST['user_id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $specialty = $_POST['specialty'];
     $bio = $_POST['bio'];
-    $password = $_POST['password']; // Lấy mật khẩu mới (nếu có)
+    $password = $_POST['password']; 
 
-    // Bắt đầu transaction
     $conn->begin_transaction();
     try {
-        // Cập nhật bảng `users`
         $sql_user = "UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?";
         $stmt_user = $conn->prepare($sql_user);
         $stmt_user->bind_param("sssi", $name, $email, $phone, $user_id);
         $stmt_user->execute();
         $stmt_user->close();
 
-        // Nếu người dùng nhập mật khẩu mới, cập nhật nó
         if (!empty($password)) {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $sql_pass = "UPDATE users SET password = ? WHERE id = ?";
@@ -40,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_pass->close();
         }
 
-        // Cập nhật bảng `doctors`
         $sql_doctor = "UPDATE doctors SET specialty = ?, bio = ? WHERE id = ?";
         $stmt_doctor = $conn->prepare($sql_doctor);
         $stmt_doctor->bind_param("ssi", $specialty, $bio, $doctor_id);
@@ -57,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Lấy thông tin hiện tại của bác sĩ để điền vào form
 $sql_select = "SELECT d.id as doctor_id, u.id as user_id, u.name, u.email, u.phone, d.specialty, d.bio 
                FROM doctors d 
                JOIN users u ON d.user_id = u.id 

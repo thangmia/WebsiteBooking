@@ -1,9 +1,6 @@
 <?php
-// File: WebsiteBooking/admin/service_create.php
-
 require '../includes/check_auth.php';
 
-// Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require '../../includes/db.php';
 
@@ -12,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $duration_minutes = $_POST['duration_minutes'];
     $price = $_POST['price'];
 
-    // Validate dữ liệu (bạn có thể thêm nhiều quy tắc hơn)
     if (!empty($name) && is_numeric($duration_minutes) && is_numeric($price)) {
         $sql = "INSERT INTO services (name, description, duration_minutes, price) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);

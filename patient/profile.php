@@ -1,11 +1,6 @@
 <?php
-// File: WebsiteBooking/patient/profile.php
 
-// Dòng này phải được gọi đầu tiên để bảo vệ trang và bắt đầu session
 require '../includes/check_patient_auth.php';
-
-// Nhúng header chung của trang public
-// Lưu ý: đường dẫn là '../includes/' vì file profile.php nằm trong thư mục /patient
 require '../includes/header_public.php';
 ?>
 
@@ -44,6 +39,5 @@ require '../includes/header_public.php';
     </div>
 </div>
 <?php
-// Nhúng footer chung
 require '../includes/footer_public.php'; 
 ?>

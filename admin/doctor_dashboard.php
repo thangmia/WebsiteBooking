@@ -1,22 +1,16 @@
 <?php
-// File: WebsiteBooking/admin/doctor_dashboard.php
 
-// Nhúng các file cần thiết cho trang admin
 require 'includes/header.php';
 require 'includes/sidebar.php';
 require '../includes/db.php';
 
-// Chắc chắn rằng chỉ có bác sĩ mới xem được trang này
 if ($_SESSION['user_role'] !== 'doctor') {
-    // Nếu không phải bác sĩ, đá về trang admin chính
     header("Location: index.php");
     exit();
 }
 
-// Lấy thông tin của bác sĩ đang đăng nhập
 $doctor_user_id = $_SESSION['user_id'];
 
-// Lấy các cuộc hẹn SẮP TỚI của bác sĩ này
 $upcoming_sql = "
     SELECT a.id, a.appointment_date, a.appointment_time, p_user.name as patient_name, s.name as service_name, a.status
     FROM appointments a

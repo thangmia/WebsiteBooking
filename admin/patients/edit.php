@@ -1,5 +1,4 @@
 <?php
-// File: WebsiteBooking/admin/patient_edit.php
 
 require '../includes/check_auth.php';
 require '../../includes/db.php';
@@ -9,7 +8,6 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 $id = $_GET['id'];
 
-// Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -23,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $stmt->close();
 
-    // Nếu người dùng nhập mật khẩu mới thì cập nhật
     if (!empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $sql_pass = "UPDATE users SET password = ? WHERE id = ?";
@@ -37,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 
-// Lấy thông tin hiện tại của bệnh nhân để điền vào form
 $sql_select = "SELECT name, email, phone FROM users WHERE id = ? AND role = 'patient'";
 $stmt_select = $conn->prepare($sql_select);
 $stmt_select->bind_param("i", $id);

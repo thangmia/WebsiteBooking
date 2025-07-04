@@ -1,14 +1,11 @@
 <?php
-// File: WebsiteBooking/admin/appointment_edit.php
 require '../includes/check_auth.php';
 require '../../includes/db.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) die("ID không hợp lệ.");
 $id = $_GET['id'];
 
-// Xử lý POST request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy dữ liệu...
     $patient_id = $_POST['patient_id'];
     $doctor_id = $_POST['doctor_id'];
     $service_id = $_POST['service_id'];
@@ -28,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Lấy thông tin lịch hẹn hiện tại
 $stmt_select = $conn->prepare("SELECT * FROM appointments WHERE id = ?");
 $stmt_select->bind_param("i", $id);
 $stmt_select->execute();
@@ -40,7 +36,6 @@ if ($result->num_rows === 1) {
 }
 $stmt_select->close();
 
-// Lấy danh sách cho các dropdown
 $patients_result = $conn->query("SELECT id, name FROM users WHERE role = 'patient' ORDER BY name");
 $doctors_result = $conn->query("SELECT d.id, u.name FROM doctors d JOIN users u ON d.user_id = u.id ORDER BY u.name");
 $services_result = $conn->query("SELECT id, name FROM services ORDER BY name");

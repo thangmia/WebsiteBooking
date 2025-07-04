@@ -1,5 +1,4 @@
 <?php
-// File: WebsiteBooking/login.php
 session_start();
 if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'patient') {
     header("Location: profile.php");
@@ -39,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Nhúng header
 require '../includes/header_public.php';
 ?>
 <title>Đăng nhập - Phòng khám Nha Khoa</title>

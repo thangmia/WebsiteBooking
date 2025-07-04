@@ -1,10 +1,8 @@
 <?php
-// File: WebsiteBooking/admin/appointments.php
 
 require '../includes/check_auth.php';
 require '../../includes/db.php';
 
-// Câu lệnh JOIN phức tạp để lấy thông tin từ nhiều bảng
 $sql = "SELECT 
             a.id, 
             a.appointment_time, 
@@ -24,7 +22,6 @@ $result = $conn->query($sql);
 require '../includes/header.php';
 require '../includes/sidebar.php';
 
-// Hàm nhỏ để hiển thị status với màu sắc
 function getStatusBadge($status) {
     switch ($status) {
         case 'pending':

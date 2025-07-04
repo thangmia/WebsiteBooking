@@ -1,65 +1,52 @@
 <?php
-// File: WebsiteBooking/admin/doctor_create.php
 
 require '../includes/check_auth.php';
 
-// Chỉ admin mới có quyền tạo
 if (!is_admin()) {
     die("Bạn không có quyền truy cập trang này.");
 }
 
-// Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require '../../includes/db.php';
 
-    // Dữ liệu cho bảng `users`
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $phone = $_POST['phone'];
-    $role = 'doctor'; // Luôn là doctor
+    $role = 'doctor'; 
 
-    // Dữ liệu cho bảng `doctors`
     $specialty = $_POST['specialty'];
     $bio = $_POST['bio'];
     
-    // Validate cơ bản
     if (empty($name) || empty($email) || empty($password) || empty($specialty)) {
         $error = "Vui lòng điền vào các trường bắt buộc (*).";
     } else {
-        // Bắt đầu một transaction
         $conn->begin_transaction();
 
         try {
-            // Bước 1: Thêm vào bảng `users`
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $sql_user = "INSERT INTO users (name, email, password, phone, role) VALUES (?, ?, ?, ?, ?)";
             $stmt_user = $conn->prepare($sql_user);
             $stmt_user->bind_param("sssss", $name, $email, $hashed_password, $phone, $role);
             $stmt_user->execute();
 
-            // Lấy ID của user vừa được tạo
             $user_id = $conn->insert_id;
             $stmt_user->close();
 
-            // Bước 2: Thêm vào bảng `doctors`
             $sql_doctor = "INSERT INTO doctors (user_id, specialty, bio) VALUES (?, ?, ?)";
             $stmt_doctor = $conn->prepare($sql_doctor);
             $stmt_doctor->bind_param("iss", $user_id, $specialty, $bio);
             $stmt_doctor->execute();
             $stmt_doctor->close();
 
-            // Nếu tất cả thành công, commit transaction
             $conn->commit();
 
             header("Location: doctors.php?success=Thêm bác sĩ thành công!");
             exit();
 
         } catch (mysqli_sql_exception $exception) {
-            // Nếu có lỗi, rollback transaction
             $conn->rollback();
             
-            // Bắt lỗi email trùng lặp
             if ($conn->errno == 1062) {
                 $error = "Lỗi: Email đã tồn tại trong hệ thống.";
             } else {

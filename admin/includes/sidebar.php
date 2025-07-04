@@ -1,5 +1,4 @@
 <?php
-// Đảm bảo BASE_URL được định nghĩa để các link hoạt động chính xác
 if (!defined('BASE_URL')) {
     define('BASE_URL', '/WebsiteBooking/admin/');
 }

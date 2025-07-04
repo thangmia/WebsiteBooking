@@ -1,12 +1,8 @@
 <?php
-// File: WebsiteBooking/doctors.php
 
-// Nhúng các tệp cần thiết
 require 'includes/header_public.php';
 require 'includes/db.php';
 
-// Câu lệnh SQL để lấy thông tin các bác sĩ
-// Chúng ta JOIN bảng 'doctors' và 'users' để lấy tên, chuyên khoa và tiểu sử
 $sql = "SELECT u.name, d.specialty, d.bio 
         FROM doctors d 
         JOIN users u ON d.user_id = u.id 
@@ -41,7 +37,6 @@ $doctors_result = $conn->query($sql);
                             
                             <p class="card-text">
                                 <?php 
-                                    // Hiển thị một phần tiểu sử và có thể thêm nút "Xem thêm"
                                     $bio = htmlspecialchars($doctor['bio']);
                                     echo strlen($bio) > 100 ? substr($bio, 0, 100) . '...' : $bio;
                                 ?>
@@ -63,7 +58,6 @@ $doctors_result = $conn->query($sql);
 
 
 <?php
-// Đóng kết nối và nhúng footer
 $conn->close();
 require 'includes/footer_public.php';
 ?>
