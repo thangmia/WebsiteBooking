@@ -1,8 +1,8 @@
 <?php
 // File: WebsiteBooking/admin/patient_edit.php
 
-require 'includes/check_auth.php';
-require '../includes/db.php';
+require '../includes/check_auth.php';
+require '../../includes/db.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("ID bệnh nhân không hợp lệ.");
@@ -51,8 +51,8 @@ if ($result->num_rows === 1) {
 $stmt_select->close();
 $conn->close();
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
@@ -81,4 +81,4 @@ require 'includes/sidebar.php';
     </form>
 </main>
 
-<?php require 'includes/footer.php'; ?>
+<?php require '../includes/footer.php'; ?>

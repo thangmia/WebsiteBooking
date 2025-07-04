@@ -13,6 +13,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/style.css">
+
     </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,7 +32,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <a class="nav-link" href="<?php echo BASE_URL; ?>index.php#services">Dịch vụ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Đội ngũ Bác sĩ</a>
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>index.php#doctors-section">Đội ngũ Bác sĩ</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -58,3 +60,5 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
         </div>
     </nav>
+</body>
+</html>

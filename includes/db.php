@@ -1,20 +1,16 @@
 <?php
-// WebsiteBooking/includes/db.php
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $host = 'localhost';
 $dbname = 'db_nhakhoa';
-$username = 'root'; // User mặc định của XAMPP
-$password = '';     // Password mặc định của XAMPP
+$username = 'root';
+$password = ''; 
 
-// Sử dụng mysqli để nhất quán với file login.php của bạn
-$conn = new mysqli($host, $username, $password, $dbname);
+try {
+    $conn = new mysqli($host, $username, $password, $dbname);
+    $conn->set_charset("utf8mb4");
 
-// Kiểm tra kết nối
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+} catch (mysqli_sql_exception $e) {
+    die("Lỗi kết nối CSDL: " . $e->getMessage());
 }
-
-// Thiết lập charset để hiển thị tiếng Việt chính xác
-$conn->set_charset("utf8mb4");
-
 ?>

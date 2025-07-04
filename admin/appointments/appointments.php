@@ -1,8 +1,8 @@
 <?php
 // File: WebsiteBooking/admin/appointments.php
 
-require 'includes/check_auth.php';
-require '../includes/db.php';
+require '../includes/check_auth.php';
+require '../../includes/db.php';
 
 // Câu lệnh JOIN phức tạp để lấy thông tin từ nhiều bảng
 $sql = "SELECT 
@@ -15,14 +15,14 @@ $sql = "SELECT
         FROM appointments a
         LEFT JOIN users p ON a.patient_id = p.id
         LEFT JOIN doctors d ON a.doctor_id = d.id
-        LEFT JOIN users AS d_user ON d.user_id = u_doc.id
+        LEFT JOIN users AS d_user ON d.user_id = d_user.id
         LEFT JOIN services s ON a.service_id = s.id
         ORDER BY a.appointment_time DESC";
 
 $result = $conn->query($sql);
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 
 // Hàm nhỏ để hiển thị status với màu sắc
 function getStatusBadge($status) {
@@ -45,7 +45,7 @@ function getStatusBadge($status) {
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Quản lý Lịch hẹn</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="appointment_create.php" class="btn btn-sm btn-outline-success">
+            <a href="create.php" class="btn btn-sm btn-outline-success">
                 Tạo Lịch hẹn mới
             </a>
         </div>
@@ -97,5 +97,5 @@ function getStatusBadge($status) {
 
 <?php
 $conn->close();
-require 'includes/footer.php';
+require '../includes/footer.php';
 ?>

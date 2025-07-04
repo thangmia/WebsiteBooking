@@ -1,14 +1,14 @@
 <?php
 // File: WebsiteBooking/admin/service_delete.php
 
-require 'includes/check_auth.php';
+require '../includes/check_auth.php';
 
 // Chỉ admin mới có quyền xóa
 if (!is_admin()) {
     die("Bạn không có quyền thực hiện hành động này.");
 }
 
-require '../includes/db.php';
+require '../../includes/db.php';
 
 $id = $_GET['id'];
 if (!is_numeric($id)) {

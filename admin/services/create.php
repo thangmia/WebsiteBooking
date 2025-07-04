@@ -1,11 +1,11 @@
 <?php
 // File: WebsiteBooking/admin/service_create.php
 
-require 'includes/check_auth.php';
+require '../includes/check_auth.php';
 
 // Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require '../includes/db.php';
+    require '../../includes/db.php';
 
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
@@ -70,5 +70,5 @@ require 'includes/sidebar.php';
 </main>
 
 <?php
-require 'includes/footer.php';
+require '../includes/footer.php';
 ?>

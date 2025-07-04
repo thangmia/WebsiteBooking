@@ -1,8 +1,8 @@
 <?php
 // File: WebsiteBooking/admin/patient_delete.php
 
-require 'includes/check_auth.php';
-require '../includes/db.php';
+require '../includes/check_auth.php';
+require '../../includes/db.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("ID không hợp lệ.");

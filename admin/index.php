@@ -2,6 +2,7 @@
 
 require 'includes/check_auth.php';
 require 'includes/header.php';
+require 'includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
@@ -20,7 +21,5 @@ require 'includes/header.php';
 </main>
 
 <?php
-// BƯỚC 4: GỌI FOOTER
-// Footer chứa phần cuối HTML và các file Javascript
 require 'includes/footer.php';
 ?>

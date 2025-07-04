@@ -1,8 +1,8 @@
 <?php
 // File: WebsiteBooking/admin/appointment_create.php
 
-require 'includes/check_auth.php';
-require '../includes/db.php';
+require '../includes/check_auth.php';
+require '../../includes/db.php';
 
 // Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,8 +35,8 @@ $patients_result = $conn->query("SELECT id, name FROM users WHERE role = 'patien
 $doctors_result = $conn->query("SELECT d.id, u.name FROM doctors d JOIN users u ON d.user_id = u.id ORDER BY u.name");
 $services_result = $conn->query("SELECT id, name FROM services ORDER BY name");
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
@@ -102,5 +102,5 @@ require 'includes/sidebar.php';
 
 <?php
 $conn->close();
-require 'includes/footer.php';
+require '../includes/footer.php';
 ?>

@@ -1,7 +1,7 @@
 <?php
 // File: WebsiteBooking/admin/appointment_edit.php
-require 'includes/check_auth.php';
-require '../includes/db.php';
+require '../includes/check_auth.php';
+require '../../includes/db.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) die("ID không hợp lệ.");
 $id = $_GET['id'];
@@ -45,15 +45,15 @@ $patients_result = $conn->query("SELECT id, name FROM users WHERE role = 'patien
 $doctors_result = $conn->query("SELECT d.id, u.name FROM doctors d JOIN users u ON d.user_id = u.id ORDER BY u.name");
 $services_result = $conn->query("SELECT id, name FROM services ORDER BY name");
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
     <h1 class="h2 pt-3 pb-2 mb-3 border-bottom">Chỉnh sửa Lịch hẹn #<?php echo $id; ?></h1>
     <?php if (isset($error)) { echo '<div class="alert alert-danger">' . $error . '</div>'; } ?>
 
-    <form action="update.php?id=<?php echo $id; ?>" method="POST">
+    <form action="edit.php?id=<?php echo $id; ?>" method="POST">
         <div class="form-group">
             <label for="patient_id">Bệnh nhân (*)</label>
             <select class="form-control" id="patient_id" name="patient_id" required>
@@ -113,5 +113,4 @@ require 'includes/sidebar.php';
 </main>
 <?php
 $conn->close();
-require 'includes/footer.php';
-?>
+require '../includes/footer.php';

@@ -1,22 +1,20 @@
 <?php
-// File: WebsiteBooking/admin/patients.php
 
-require 'includes/check_auth.php';
-require '../includes/db.php';
+require '../includes/check_auth.php';
+require '../../includes/db.php';
 
-// Lấy tất cả user có vai trò là 'patient'
 $sql = "SELECT id, name, email, phone FROM users WHERE role = 'patient' ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Quản lý Bệnh nhân</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="patient_create.php" class="btn btn-sm btn-outline-success">
+            <a href="create.php" class="btn btn-sm btn-outline-success">
                 Thêm Bệnh nhân mới
             </a>
         </div>
@@ -51,8 +49,8 @@ require 'includes/sidebar.php';
                         <td><?php echo htmlspecialchars($row['email']); ?></td>
                         <td><?php echo htmlspecialchars($row['phone']); ?></td>
                         <td>
-                            <a href="patient_edit.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">Sửa</a>
-                            <a href="patient_delete.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa bệnh nhân này?');">Xóa</a>
+                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">Sửa</a>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa bệnh nhân này?');">Xóa</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -68,5 +66,5 @@ require 'includes/sidebar.php';
 
 <?php
 $conn->close();
-require 'includes/footer.php';
+require '../includes/footer.php';
 ?>

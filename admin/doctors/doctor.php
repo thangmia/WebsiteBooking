@@ -1,7 +1,7 @@
 <?php
 // File: WebsiteBooking/admin/doctor_create.php
 
-require 'includes/check_auth.php';
+require '../includes/check_auth.php';
 
 // Chỉ admin mới có quyền tạo
 if (!is_admin()) {
@@ -10,7 +10,7 @@ if (!is_admin()) {
 
 // Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require '../includes/db.php';
+    require '../../includes/db.php';
 
     // Dữ liệu cho bảng `users`
     $name = $_POST['name'];
@@ -70,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
@@ -115,4 +115,4 @@ require 'includes/sidebar.php';
     </form>
 </main>
 
-<?php require 'includes/footer.php'; ?>
+<?php require '../includes/footer.php'; ?>

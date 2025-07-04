@@ -1,6 +1,7 @@
 <?php
-// File này được gọi sau check_auth.php, nên chúng ta có sẵn session
-// Dùng htmlspecialchars để tránh lỗi XSS
+if (!defined('BASE_URL')) {
+define('BASE_URL', '/WebsiteBooking/admin/');
+}
 $user_name = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name']) : 'User';
 ?>
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ $user_name = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_na
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="index.php">Admin Panel</a>
+    <a class="navbar-brand" href="index.php">Dashboard</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -40,7 +41,7 @@ $user_name = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_na
                 </span>
             </li>
             <li class="nav-item">
-                <a class="btn btn-danger" href="logout.php">Đăng xuất</a>
+                <a class="btn btn-danger" href="<?php echo BASE_URL; ?>logout.php">Đăng xuất</a>
             </li>
         </ul>
     </div>

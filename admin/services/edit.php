@@ -1,8 +1,8 @@
 <?php
 // File: WebsiteBooking/admin/service_edit.php
 
-require 'includes/check_auth.php';
-require '../includes/db.php';
+require '../includes/check_auth.php';
+require '../../includes/db.php';
 
 $id = $_GET['id'];
 if (!is_numeric($id)) {
@@ -49,8 +49,8 @@ $stmt_select->close();
 $conn->close();
 
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
@@ -87,5 +87,5 @@ require 'includes/sidebar.php';
 </main>
 
 <?php
-require 'includes/footer.php';
+require '../includes/footer.php';
 ?>

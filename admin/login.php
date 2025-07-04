@@ -40,13 +40,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Kiểm tra vai trò (chỉ admin hoặc doctor được vào trang quản trị)
                 if ($user['role'] == 'admin' || $user['role'] == 'doctor') {
                     // Đăng nhập thành công, lưu thông tin vào session
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user_name'] = $user['name'];
-                    $_SESSION['user_role'] = $user['role'];
+                     $_SESSION['user_id'] = $user['id'];
+                     $_SESSION['user_name'] = $user['name'];
+                     $_SESSION['user_role'] = $user['role'];
 
-                    // Chuyển hướng đến trang dashboard
-                    header("Location: index.php");
-                    exit();
+            // ===== LOGIC CHUYỂN HƯỚNG THEO VAI TRÒ =====
+             if ($user['role'] == 'admin') {
+                // Nếu là admin, chuyển đến trang dashboard chính
+                header("Location: index.php");
+            } elseif ($user['role'] == 'doctor') {
+                // Nếu là bác sĩ, chuyển đến trang dashboard của bác sĩ
+                header("Location: doctor_dashboard.php");
+            } else {
+                // Mặc định, nếu có vai trò khác, về trang chính
+                header("Location: index.php");
+            }
+            exit();
                 } else {
                     // Vai trò không hợp lệ
                     $error_message = "Tài khoản của bạn không có quyền truy cập trang này.";

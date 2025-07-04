@@ -1,19 +1,16 @@
 <?php
-// File: WebsiteBooking/admin/patient_create.php
 
-require 'includes/check_auth.php';
+require '../includes/check_auth.php';
 
-// Xử lý khi form được submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require '../includes/db.php';
+    require '../../includes/db.php';
 
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $phone = $_POST['phone'];
-    $role = 'patient'; // Luôn là patient
+    $role = 'patient'; 
 
-    // Validate
     if (empty($name) || empty($email) || empty($password)) {
         $error = "Vui lòng điền vào các trường bắt buộc (*).";
     } else {
@@ -38,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-require 'includes/header.php';
-require 'includes/sidebar.php';
+require '../includes/header.php';
+require '../includes/sidebar.php';
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
@@ -70,4 +67,4 @@ require 'includes/sidebar.php';
     </form>
 </main>
 
-<?php require 'includes/footer.php'; ?>
+<?php require '../includes/footer.php'; ?>
