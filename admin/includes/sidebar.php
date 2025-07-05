@@ -43,6 +43,21 @@ if (!defined('BASE_URL')) {
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo BASE_URL; ?>appointments/appointments.php">
                         Lịch hẹn của tôi
+                        <li class="nav-item">
+                     <a class="nav-link" href="<?php echo BASE_URL; ?>doctor_off.php">
+                        Báo ngày nghỉ
+            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
+                    ...
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>doctor_off_list.php">
+                    Danh sách ngày nghỉ bác sĩ
+        </a>
+    </li>
+<?php endif; ?>
+
+                    </a>
+                    </li> 
+
                     </a>
                 </li>
                 <?php endif; ?>

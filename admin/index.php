@@ -14,12 +14,172 @@ require 'includes/sidebar.php';
         Chào mừng <strong><?php echo $_SESSION['user_name']; ?></strong> đã trở lại!
     </div>
 
-    <h2>Thông tin nhanh</h2>
-    <p>Đây là khu vực hiển thị các thống kê nhanh, ví dụ như số lịch hẹn đang chờ, danh sách lịch hẹn hôm nay...</p>
-    <p>Chúng ta sẽ xây dựng chức năng này ở các bước tiếp theo.</p>
+    <?php
+    // Kết nối CSDL
+    require_once '../includes/db.php';
+
+    // Lấy danh sách bác sĩ
+    $doctors = mysqli_query($conn, "
+        SELECT d.id, u.name, u.email, u.phone, d.specialty
+        FROM doctors d
+        JOIN users u ON d.user_id = u.id
+    ");
+
+    // Lấy danh sách bệnh nhân
+    $patients = mysqli_query($conn, "
+        SELECT id, name, email, phone
+        FROM users
+        WHERE role = 'patient'
+    ");
+
+    // Lấy danh sách dịch vụ
+    $services = mysqli_query($conn, "
+        SELECT id, name, price
+        FROM services
+    ");
+
+    // Lấy danh sách lịch hẹn
+    $appointments = mysqli_query($conn, "
+        SELECT a.id, u1.name AS patient_name, u2.name AS doctor_name, s.name AS service_name, a.appointment_time, a.status
+        FROM appointments a
+        LEFT JOIN users u1 ON a.patient_id = u1.id
+        LEFT JOIN doctors d ON a.doctor_id = d.id
+        LEFT JOIN users u2 ON d.user_id = u2.id
+        LEFT JOIN services s ON a.service_id = s.id
+        ORDER BY a.appointment_time DESC
+        LIMIT 10
+    ");
+    // Lấy danh sách ngày nghỉ của bác sĩ
+    $doctor_offs = mysqli_query($conn, "
+    SELECT t.id, d.id as doctor_id, u.name as doctor_name, u.email as doctor_email, t.start_time, t.end_time, t.reason
+    FROM time_offs t
+    JOIN doctors d ON t.doctor_id = d.id
+    JOIN users u ON d.user_id = u.id
+    ORDER BY t.start_time DESC
+");
+
+
+    ?>
+
+    <!-- Danh sách Bác sĩ -->
+    <h2>Danh sách Bác sĩ</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th><th>Tên</th><th>Email</th><th>Điện thoại</th><th>Chuyên khoa</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php while ($row = mysqli_fetch_assoc($doctors)): ?>
+            <tr>
+                <td><?= $row['id'] ?></td>
+                <td><?= $row['name'] ?></td>
+                <td><?= $row['email'] ?></td>
+                <td><?= $row['phone'] ?></td>
+                <td><?= $row['specialty'] ?></td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <!-- Danh sách Bệnh nhân -->
+    <h2>Danh sách Bệnh nhân</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th><th>Tên</th><th>Email</th><th>Điện thoại</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php while ($row = mysqli_fetch_assoc($patients)): ?>
+            <tr>
+                <td><?= $row['id'] ?></td>
+                <td><?= $row['name'] ?></td>
+                <td><?= $row['email'] ?></td>
+                <td><?= $row['phone'] ?></td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <!-- Danh sách Dịch vụ -->
+    <h2>Danh sách Dịch vụ</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th><th>Tên dịch vụ</th><th>Giá (VNĐ)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php while ($row = mysqli_fetch_assoc($services)): ?>
+            <tr>
+                <td><?= $row['id'] ?></td>
+                <td><?= $row['name'] ?></td>
+                <td><?= number_format($row['price'], 0, ',', '.') ?></td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <!-- Danh sách Lịch hẹn gần đây -->
+    <h2>Danh sách Lịch hẹn gần đây</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th><th>Bệnh nhân</th><th>Bác sĩ</th><th>Dịch vụ</th><th>Thời gian</th><th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php while ($row = mysqli_fetch_assoc($appointments)): ?>
+            <tr>
+                <td><?= $row['id'] ?></td>
+                <td><?= $row['patient_name'] ?></td>
+                <td><?= $row['doctor_name'] ?></td>
+                <td><?= $row['service_name'] ?></td>
+                <td><?= date('d/m/Y H:i', strtotime($row['appointment_time'])) ?></td>
+                <td><?= ucfirst($row['status']) ?></td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+    <!-- Danh sách ngày nghỉ của Bác sĩ -->
+    <h2>Danh sách ngày nghỉ của Bác sĩ</h2>
+    <?php
+    // Kiểm tra nếu có dữ liệu ngày nghỉ
+    if (mysqli_num_rows($doctor_offs) > 0): ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Bác sĩ</th>
+                    <th>Email</th>
+                    <th>Bắt đầu</th>
+                    <th>Kết thúc</th>
+                    <th>Lý do</th>
+                    <th>Ngày đăng ký</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i = 1;
+                while ($row = mysqli_fetch_assoc($doctor_offs)): ?>
+                <tr>
+                    <td><?= $i++ ?></td>
+                    <td><?= htmlspecialchars($row['doctor_name']) ?></td>
+                    <td><?= htmlspecialchars($row['doctor_email']) ?></td>
+                    <td><?= date("d/m/Y H:i", strtotime($row['start_time'])) ?></td>
+                    <td><?= date("d/m/Y H:i", strtotime($row['end_time'])) ?></td>
+                    <td><?= htmlspecialchars($row['reason']) ?></td>
+                    <td><?= date("d/m/Y H:i", strtotime($row['start_time'])) ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php else: ?>
+        <div class="alert alert-info">Hiện chưa có bác sĩ nào đăng ký ngày nghỉ.</div>
+    <?php endif; ?>
+
 
 </main>
-
-<?php
-require 'includes/footer.php';
-?>
